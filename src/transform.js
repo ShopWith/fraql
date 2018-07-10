@@ -1,3 +1,4 @@
+import { _extends } from './extends';
 import { print, Source } from 'graphql/language'
 
 function inlineSpreadFragments(fragmentDefinitions, definition) {
@@ -10,12 +11,11 @@ function inlineSpreadFragments(fragmentDefinitions, definition) {
     return definition
   }
 
-  definition.selectionSet = {
-    ...definition.selectionSet,
+  definition.selectionSet = _extends({}, definition.selection, {
     selections: definition.selectionSet.selections.map(selection =>
       inlineSpreadFragments(fragmentDefinitions, selection),
     ),
-  }
+  })
 
   return definition
 }
@@ -47,17 +47,12 @@ export function toInlineFragment(doc) {
     throw new Error('Unable to find a fragment definition')
   }
 
-  const newDoc = {
-    ...doc,
+  const newDoc = _extends({}, doc, {
     originalDocument: doc,
     definitions: [definition],
-  }
-  const source = new Source(print(newDoc))
-console.log(source);
-  newDoc.loc = {
-    ...doc.loc,
-    source: source,
-  }
+  });
+
+  newDoc.loc = _extends({}, doc.loc, { source: new Source(print(newDoc)) });
 
   return newDoc
 }
