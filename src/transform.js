@@ -52,10 +52,11 @@ export function toInlineFragment(doc) {
     originalDocument: doc,
     definitions: [definition],
   }
-
+  const source = new Source(print(newDoc))
+console.log(source);
   newDoc.loc = {
     ...doc.loc,
-    source: new Source(print(newDoc)),
+    source: source,
   }
 
   return newDoc

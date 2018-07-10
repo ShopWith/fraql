@@ -2,14 +2,14 @@
   "presets": [["env", { "loose": true, "modules": false }]],
   "plugins": [
     ["transform-class-properties", { "loose": true }],
-    "transform-object-rest-spread"
+    "syntax-object-rest-spread"
   ],
   "env": {
     "test": {
       "plugins": [
         "dynamic-import-node",
         ["transform-class-properties", { "loose": true }],
-        "transform-object-rest-spread"
+        "syntax-object-rest-spread"
       ],
       "presets": [["env", { "loose": true }]]
     }
